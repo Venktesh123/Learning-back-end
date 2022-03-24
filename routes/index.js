@@ -1,6 +1,7 @@
 const express=require('express');
 const router=express.Router();
-module.exports=router;
-const homeController=require('../controller/homecontroller');
-router.get('/',homeController.home);
+const Controller=require('../controller/homecontroller');
+router.get('/',Controller.home);
+router.use('/user',require('./user'));
 console.log("router is loaded");
+module.exports=router;
