@@ -8,9 +8,11 @@ const db=require('./config/mongoose');
 const session=require('express-session');
 const passport=require('passport');
 const passportLocal=require('./config/passport-local-strategy');
+const passportJWT=require('./config/passport-jwt-strategy');
 const MongoStore=require('connect-mongo')(session);
 app.use(express.urlencoded());
 app.use(cookieParser());
+app.use('/uploads',express.static(__dirname + '/uploads'));
 app.use(expressLayout);
 app.use(express.static('./assets'));
 app.set('layout extractStyles',true);
@@ -20,6 +22,7 @@ app.set('views','./views');
 const sassMiddleware=require('node-sass-middleware');
 const flash=require('connect-flash');
 const customMware=require('./config/middleware');
+const { __express } = require('ejs');
 app.use(sassMiddleware({
 src:'./assets/scss',
 dest:'./assets/css',
@@ -29,7 +32,8 @@ prefix:'/css',
 force:true
 
 }));
-//mongo store is used to store the session cookie in the db
+
+
 app.use(session({
     name:'codeial',
     secret:'blahsomething',
